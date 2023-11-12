@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <script src="https://unpkg.com/htmx.org@1.9.8"></script>
+
+        <script>
+            // Clears out form after submitting
+            async function clearForm (event) {
+                event.preventDefault();
+                await htmx.trigger(document.getElementById('url-form'), 'submit');
+                await document.getElementById("url-form").reset();
+            }
+        </script>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+            * {
+                background-color: whitesmoke;
+                font-family: "Poppins";
+            }
+
+            main {
+                display: grid;
+                place-items: center;
+            }
+
+            form label {
+                margin-right: 10px;
+            }
+
+            form input[type="text"] {
+                border: black 2px solid;
+                border-radius: 10px;
+                background-color: whitesmoke;
+                padding: 10px 5px;
+                font-size: 14px;
+            }
+
+            form input[type="submit"] {
+                border-radius: 10px;
+                background-color: whitesmoke;
+                padding: 10px 5px;
+                border: black 2px solid;
+                cursor:pointer;
+            }
+
+            form input[type="submit"]:hover {
+                background-color: red;
+            }
+
+            #result {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>URL SHORTENER</h1>
+            <form id="url-form" hx-post="/new" hx-target="#result" hx-swap="outerHTML">
+                <label for="url">URL</label>
+                <input name="url" type="text">
+                <input type="submit" value="Submit" onclick="clearForm(event)">
+            </form>
+            <p>SHORTENED URL: <a id="result" target="_blank">Press Submit To Generate Short URL</a></p>
+        </main>
+    </body>
+</html>

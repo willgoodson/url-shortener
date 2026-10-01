@@ -1,0 +1,10 @@
+# Go build output
+/url-shortener
+*.exe
+*.test
+*.out
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

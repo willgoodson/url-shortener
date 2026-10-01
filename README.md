@@ -46,8 +46,7 @@ Then open http://localhost:3000.
 
 ## Future Work
 
-- [ ] Validate submitted URLs (allow only `http`/`https`) and return a 400 error instead of panicking on empty input
-- [ ] Fix the error paths in the handlers: add a `return` after `http.Redirect` so execution doesn't continue
+- [ ] Validate submitted URLs (allow only `http`/`https`)
 - [ ] Create one Redis client at startup and reuse it, instead of connecting on every request
 - [ ] Read the Redis address, port and public base URL from environment variables instead of hardcoding `localhost`
 - [ ] Use `302`/`307` redirects instead of `308` so browsers don't permanently cache a link that might change

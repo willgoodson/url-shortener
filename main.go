@@ -26,7 +26,8 @@ func main() {
 
 		url := r.Form.Get("url")
 		if url == "" {
-			panic("No URL")
+			http.Error(w, "No URL provided", http.StatusBadRequest)
+			return
 		}
 
 		unique_slug := uniuri.NewLen(8)
@@ -39,7 +40,8 @@ func main() {
 		err := rdb.Set(ctx, unique_slug, url, 0).Err()
 		rdb.Close()
 		if err != nil {
-			http.Redirect(w, r, "/", http.StatusPermanentRedirect)
+			http.Error(w, "Error saving URL", http.StatusInternalServerError)
+			return
 		}
 		w.Write([]byte("<a id='result' target='_blank' href='" + unique_slug + "'>" + "http://localhost:3000/" + unique_slug + "</a>"))
 	})
@@ -56,7 +58,8 @@ func main() {
 		val, err := rdb.Get(ctx, slug).Result()
 		rdb.Close()
 		if err != nil {
-			http.Redirect(w, r, "/", http.StatusPermanentRedirect)
+			http.Redirect(w, r, "/", http.StatusFound)
+			return
 		}
 
 		http.Redirect(w, r, val, http.StatusPermanentRedirect)
